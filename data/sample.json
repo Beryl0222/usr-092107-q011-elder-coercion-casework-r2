@@ -1,0 +1,9 @@
+{
+  "event_id": "sample-011-001",
+  "event_type": "REPORT_RECEIVED",
+  "aggregate_type": "incident_report",
+  "aggregate_id": "elder_coercion_casework-001",
+  "occurred_at": "2026-09-20T18:00:00+08:00",
+  "version": 1,
+  "summary": "登记涉老强迫交易线索网的首条领域记录"
+}
