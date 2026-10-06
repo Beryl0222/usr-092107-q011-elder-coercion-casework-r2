@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "涉老强迫交易线索网领域事件",
+  "description": "区级涉老权益中心线索协同与案件证据后端的统一事件词汇。记录一经接收只可追加，标识、发生时间与版本不得原地改写；更正以新的后继事件表达。",
   "type": "object",
   "required": [
     "event_id",
@@ -14,25 +15,52 @@
   "properties": {
     "event_id": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "仓库内全局唯一的事件标识，也是跨来源去重的最终依据"
     },
     "event_type": {
       "type": "string",
       "enum": [
         "REPORT_RECEIVED",
+        "REPORT_DEDUPED",
+        "SUBJECT_ROLE_NOTED",
+        "VEHICLE_TRACKED",
+        "MERCHANT_RECORDED",
         "LINK_SUGGESTED",
+        "LINK_CONFIRMED",
+        "LINK_REJECTED",
+        "STATEMENT_RECORDED",
+        "STATEMENT_AMENDED",
+        "STATEMENT_ACCESSED",
         "EVIDENCE_SEALED",
-        "PROTECTIVE_ACTIONED",
-        "CASE_TRANSFERRED"
+        "EVIDENCE_ACCESSED",
+        "EMERGENCY_CONTACT_STARTED",
+        "FUND_CONTROL_REQUESTED",
+        "FUND_CONTROL_DECIDED",
+        "CASE_MERGED",
+        "CASE_TRANSFERRED",
+        "ASSET_RECOVERY_UPDATED",
+        "ACCESS_GRANTED",
+        "RISK_NOTICE_PUBLISHED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "incident_report",
+        "subject_person",
+        "vehicle",
+        "merchant",
         "subject_link",
+        "victim_statement",
         "evidence_item",
-        "case_transfer"
+        "protective_action",
+        "fund_control",
+        "case_merge",
+        "case_transfer",
+        "asset_recovery",
+        "access_grant",
+        "risk_notice"
       ]
     },
     "aggregate_id": {
@@ -45,11 +73,118 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一 aggregate_id 下从 1 起连续递增，不跳号、不复用"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "description": "原始来源信息：任何渠道进入仓库的记录都必须可回溯到来源系统与原始单号",
+      "required": ["channel", "source_ref"],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "police_hotline",
+            "community_visit",
+            "family_report",
+            "payment_dispute",
+            "risk_model",
+            "caseworker",
+            "bank_counter",
+            "court_transfer"
+          ]
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "received_by": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "按事件类型承载业务字段；关键法定边界由 src/validator.py 校验",
+      "properties": {
+        "duplicate_of_event_ids": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "suggested_by": {
+          "type": "string",
+          "enum": ["risk_model", "manual_review"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "confirmed_by": {"type": "string"},
+        "reject_reason": {"type": "string"},
+        "role": {
+          "type": "string",
+          "enum": ["recruiter", "driver", "enforcer", "cashier", "salesperson", "lookup", "unknown"]
+        },
+        "network_refs": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "supersedes_event_id": {"type": "string"},
+        "obtained_by_method": {"type": "string"},
+        "custodian": {"type": "string"},
+        "scope_of_use": {"type": "string"},
+        "legal_authority": {"type": "string"},
+        "duty_officer": {"type": "string"},
+        "action": {
+          "type": "string",
+          "enum": ["freeze", "release", "monitor_only"]
+        },
+        "authorized_by": {"type": "string"},
+        "legal_basis": {"type": "string"},
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "SIMILAR_TRANSACTION_ONLY",
+            "ONGOING_COERCION_OBSERVED",
+            "FORMAL_CASE_DOCUMENT",
+            "COURT_ORDER"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "merged_district_case_refs": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "reader": {"type": "string"},
+        "purpose": {"type": "string"},
+        "access_role": {
+          "type": "string",
+          "enum": ["investigator", "prosecutor", "social_worker", "family", "community_publisher"]
+        },
+        "fields_granted": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["case_internal", "family_visible", "public"]
+        },
+        "disclosure_level": {
+          "type": "string",
+          "enum": ["public", "internal"]
+        }
+      }
     }
   },
   "additionalProperties": true

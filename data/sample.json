@@ -5,5 +5,11 @@
   "aggregate_id": "elder_coercion_casework-001",
   "occurred_at": "2026-09-20T18:00:00+08:00",
   "version": 1,
-  "summary": "登记涉老强迫交易线索网的首条领域记录"
+  "summary": "登记涉老强迫交易线索网的首条领域记录",
+  "source": {
+    "channel": "police_hotline",
+    "source_ref": "110-20260920-0441",
+    "received_by": "值班员周敏",
+    "district": "东城区"
+  }
 }

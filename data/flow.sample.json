@@ -1,0 +1,483 @@
+[
+  {
+    "event_id": "evt-2026-0920-001",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "R-2026-1001",
+    "occurred_at": "2026-09-20T09:12:00+08:00",
+    "version": 1,
+    "summary": "110接报：老人在柳荫公园被陌生人带上灰色面包车，送货入户后被迫付款8600元",
+    "source": {
+      "channel": "police_hotline",
+      "source_ref": "110-20260920-0441",
+      "received_by": "值班员周敏",
+      "district": "东城区"
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-002",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "R-2026-1002",
+    "occurred_at": "2026-09-20T10:05:00+08:00",
+    "version": 1,
+    "summary": "家属到社区报失：老人当日取现金后购买劣质保健品，描述与公园接人情节相同",
+    "source": {
+      "channel": "family_report",
+      "source_ref": "JZ-DC-20260920-017",
+      "received_by": "社工李航",
+      "district": "东城区"
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-003",
+    "event_type": "REPORT_DEDUPED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "R-2026-1002",
+    "occurred_at": "2026-09-20T10:40:00+08:00",
+    "version": 2,
+    "summary": "家属报失与110警情指向同一事件，按仓库事件标识并入 R-2026-1001，原始来源单号均保留",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "CASEWORKER-ZHOU-20260920-003",
+      "received_by": "办案员赵岩",
+      "district": "东城区"
+    },
+    "payload": {
+      "duplicate_of_event_ids": ["evt-2026-0920-001"]
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-004",
+    "event_type": "VEHICLE_TRACKED",
+    "aggregate_type": "vehicle",
+    "aggregate_id": "V-JINGA-77X2",
+    "occurred_at": "2026-09-20T11:20:00+08:00",
+    "version": 1,
+    "summary": "卡口轨迹：灰色面包车9月18日至20日连续在三个公园北门停靠后驶向同一出租院",
+    "source": {
+      "channel": "police_hotline",
+      "source_ref": "TRAFFIC-TRACK-20260920-008",
+      "received_by": "办案员赵岩",
+      "district": "东城区"
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-005",
+    "event_type": "MERCHANT_RECORDED",
+    "aggregate_type": "merchant",
+    "aggregate_id": "M-KANGTAI-009",
+    "occurred_at": "2026-09-20T11:35:00+08:00",
+    "version": 1,
+    "summary": "登记商户主体：康泰健康咨询部，收款码与老人付款对手方一致，登记地址为上述出租院",
+    "source": {
+      "channel": "payment_dispute",
+      "source_ref": "PAY-DISP-20260920-052",
+      "received_by": "银行联络员陈静",
+      "district": "东城区"
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-006",
+    "event_type": "SUBJECT_ROLE_NOTED",
+    "aggregate_type": "subject_person",
+    "aggregate_id": "S-WANG-01",
+    "occurred_at": "2026-09-20T14:00:00+08:00",
+    "version": 1,
+    "summary": "王某担任司机，负责在公园搭讪并将老人带上车",
+    "source": {
+      "channel": "community_visit",
+      "source_ref": "SQ-ZF-20260920-031",
+      "received_by": "社工李航",
+      "district": "东城区"
+    },
+    "payload": {
+      "role": "driver",
+      "network_refs": ["S-LIU-02", "S-ZHANG-03"]
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-007",
+    "event_type": "SUBJECT_ROLE_NOTED",
+    "aggregate_type": "subject_person",
+    "aggregate_id": "S-LIU-02",
+    "occurred_at": "2026-09-20T14:10:00+08:00",
+    "version": 1,
+    "summary": "刘某在密闭出租院内看守房门、阻止老人打电话，担任施压逼迫交易的角色",
+    "source": {
+      "channel": "community_visit",
+      "source_ref": "SQ-ZF-20260920-032",
+      "received_by": "社工李航",
+      "district": "东城区"
+    },
+    "payload": {
+      "role": "enforcer",
+      "network_refs": ["S-WANG-01", "S-ZHANG-03"]
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-008",
+    "event_type": "LINK_SUGGESTED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-2026-0201",
+    "occurred_at": "2026-09-20T15:00:00+08:00",
+    "version": 1,
+    "summary": "风险模型提示：车辆轨迹、收款商户与多名老人陈述话术高度相似，疑似同一作案网络（仅提示，不定论）",
+    "source": {
+      "channel": "risk_model",
+      "source_ref": "MODEL-RUN-20260920-1188",
+      "received_by": "系统自动",
+      "district": "东城区"
+    },
+    "payload": {
+      "suggested_by": "risk_model",
+      "confidence": 0.87
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-009",
+    "event_type": "LINK_SUGGESTED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-2026-0202",
+    "occurred_at": "2026-09-20T15:01:00+08:00",
+    "version": 1,
+    "summary": "风险模型另提示一辆近似车牌车辆可能涉案（仅提示，不定论）",
+    "source": {
+      "channel": "risk_model",
+      "source_ref": "MODEL-RUN-20260920-1188",
+      "received_by": "系统自动",
+      "district": "东城区"
+    },
+    "payload": {
+      "suggested_by": "risk_model",
+      "confidence": 0.61
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-010",
+    "event_type": "LINK_REJECTED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-2026-0202",
+    "occurred_at": "2026-09-20T16:20:00+08:00",
+    "version": 2,
+    "summary": "人工核查后排除近似车牌车辆：车型与车身标识不符且当日无园区轨迹，排除理由留存",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "CASEWORKER-ZHAO-20260920-010",
+      "received_by": "办案员赵岩",
+      "district": "东城区"
+    },
+    "payload": {
+      "reject_reason": "近似车牌实为同城另一注册车辆，车型不符且无公园卡口记录"
+    }
+  },
+  {
+    "event_id": "evt-2026-0920-011",
+    "event_type": "LINK_CONFIRMED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-2026-0201",
+    "occurred_at": "2026-09-20T17:30:00+08:00",
+    "version": 2,
+    "summary": "办案员结合轨迹、收款主体与两名老人指认，人工确认该团伙关联",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "CASEWORKER-ZHAO-20260920-011",
+      "received_by": "办案员赵岩",
+      "district": "东城区"
+    },
+    "payload": {
+      "confirmed_by": "警官赵岩",
+      "confidence": 0.87
+    }
+  },
+  {
+    "event_id": "evt-2026-0921-012",
+    "event_type": "STATEMENT_RECORDED",
+    "aggregate_type": "victim_statement",
+    "aggregate_id": "ST-VICTIM-MA-01",
+    "occurred_at": "2026-09-21T09:30:00+08:00",
+    "version": 1,
+    "summary": "马姓老人首次笔录：在公园被请去‘领鸡蛋’，上车后被收走手机，店内被围堵后刷卡",
+    "source": {
+      "channel": "police_hotline",
+      "source_ref": "BL-20260921-009",
+      "received_by": "警官赵岩",
+      "district": "东城区"
+    }
+  },
+  {
+    "event_id": "evt-2026-0922-013",
+    "event_type": "STATEMENT_AMENDED",
+    "aggregate_type": "victim_statement",
+    "aggregate_id": "ST-VICTIM-MA-01",
+    "occurred_at": "2026-09-22T10:00:00+08:00",
+    "version": 2,
+    "summary": "老人补充：当日还取过一笔现金；原笔录不删改，以本更正事件追加",
+    "source": {
+      "channel": "police_hotline",
+      "source_ref": "BL-20260922-003",
+      "received_by": "警官赵岩",
+      "district": "东城区"
+    },
+    "payload": {
+      "supersedes_event_id": "evt-2026-0921-012"
+    }
+  },
+  {
+    "event_id": "evt-2026-0922-014",
+    "event_type": "STATEMENT_ACCESSED",
+    "aggregate_type": "victim_statement",
+    "aggregate_id": "ST-VICTIM-MA-01",
+    "occurred_at": "2026-09-22T15:10:00+08:00",
+    "version": 3,
+    "summary": "检察官为审查批捕调阅笔录，调阅记录留存",
+    "source": {
+      "channel": "court_transfer",
+      "source_ref": "PROC-ACCESS-20260922-014",
+      "received_by": "检察官高蕾",
+      "district": "东城区"
+    },
+    "payload": {
+      "reader": "检察官高蕾",
+      "purpose": "审查批捕需要核对被害人口述"
+    }
+  },
+  {
+    "event_id": "evt-2026-0921-015",
+    "event_type": "EVIDENCE_SEALED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "E-VIDEO-031",
+    "occurred_at": "2026-09-21T11:00:00+08:00",
+    "version": 1,
+    "summary": "封存出租院门口及店内监控视频，记录带离老人、看守房门与付款全过程",
+    "source": {
+      "channel": "police_hotline",
+      "source_ref": "EVID-SEAL-20260921-031",
+      "received_by": "技术员孙拓",
+      "district": "东城区"
+    },
+    "payload": {
+      "obtained_by_method": "持调取证据通知书向出租院物业依法调取原始硬盘并哈希封存",
+      "custodian": "分局法制大队证据柜，保管人孙拓",
+      "scope_of_use": "仅限本强迫交易案刑事诉讼使用，不得用于对外宣传"
+    }
+  },
+  {
+    "event_id": "evt-2026-0921-016",
+    "event_type": "EVIDENCE_SEALED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "E-APPRAISAL-018",
+    "occurred_at": "2026-09-21T11:30:00+08:00",
+    "version": 1,
+    "summary": "封存涉案‘保健品’及商品鉴定意见：系普通食品，标价高于进货价42倍",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "EVID-SEAL-20260921-018",
+      "received_by": "办案员赵岩",
+      "district": "东城区"
+    },
+    "payload": {
+      "obtained_by_method": "搜查时现场扣押并委托市场监管部门指定机构鉴定",
+      "custodian": "分局物证室，保管人韩雪",
+      "scope_of_use": "限本案及关联并案案件的价格与定性认定使用"
+    }
+  },
+  {
+    "event_id": "evt-2026-0922-017",
+    "event_type": "EVIDENCE_ACCESSED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "E-VIDEO-031",
+    "occurred_at": "2026-09-22T16:00:00+08:00",
+    "version": 2,
+    "summary": "检察官调阅封存视频，登记调阅人、事由与使用范围",
+    "source": {
+      "channel": "court_transfer",
+      "source_ref": "PROC-ACCESS-20260922-017",
+      "received_by": "检察官高蕾",
+      "district": "东城区"
+    },
+    "payload": {
+      "reader": "检察官高蕾",
+      "purpose": "核实限制联络与逼迫付款情节",
+      "scope_of_use": "审查起诉阶段内部使用，不得复制外传"
+    }
+  },
+  {
+    "event_id": "evt-2026-0923-018",
+    "event_type": "EMERGENCY_CONTACT_STARTED",
+    "aggregate_type": "protective_action",
+    "aggregate_id": "PA-2026-0923-001",
+    "occurred_at": "2026-09-23T08:40:00+08:00",
+    "version": 1,
+    "summary": "银行柜员发现老人被两人陪同至柜台要求大额取款且不准本人接听电话，值班员依法启动紧急联络",
+    "source": {
+      "channel": "bank_counter",
+      "source_ref": "BANK-ALERT-20260923-006",
+      "received_by": "银行联络员陈静",
+      "district": "西城区"
+    },
+    "payload": {
+      "duty_officer": "值班员周敏",
+      "legal_authority": "依《反电信网络诈骗法》与涉老应急处置联动规程，疑似正在发生限制人身自由下的取款"
+    }
+  },
+  {
+    "event_id": "evt-2026-0923-019",
+    "event_type": "FUND_CONTROL_REQUESTED",
+    "aggregate_type": "fund_control",
+    "aggregate_id": "FC-2026-0923-001",
+    "occurred_at": "2026-09-23T08:45:00+08:00",
+    "version": 1,
+    "summary": "现场处置组请求对涉案收款账户采取临时控制，理由是正在发生的胁迫陪同取款",
+    "source": {
+      "channel": "bank_counter",
+      "source_ref": "BANK-FC-20260923-006",
+      "received_by": "银行联络员陈静",
+      "district": "西城区"
+    },
+    "payload": {
+      "action": "freeze",
+      "reason_code": "ONGOING_COERCION_OBSERVED"
+    }
+  },
+  {
+    "event_id": "evt-2026-0923-020",
+    "event_type": "FUND_CONTROL_DECIDED",
+    "aggregate_type": "fund_control",
+    "aggregate_id": "FC-2026-0923-001",
+    "occurred_at": "2026-09-23T09:05:00+08:00",
+    "version": 2,
+    "summary": "经审批对涉案账户临时冻结48小时；相似交易提示本身不构成冻结依据",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "FC-DECIDE-20260923-006",
+      "received_by": "值班领导马东",
+      "district": "西城区"
+    },
+    "payload": {
+      "action": "freeze",
+      "reason_code": "ONGOING_COERCION_OBSERVED",
+      "authorized_by": "值班领导马东",
+      "legal_basis": "刑事诉讼法关于先行采取保全措施的规定及应急联动规程"
+    }
+  },
+  {
+    "event_id": "evt-2026-0925-021",
+    "event_type": "CASE_MERGED",
+    "aggregate_type": "case_merge",
+    "aggregate_id": "CM-2026-0007",
+    "occurred_at": "2026-09-25T10:00:00+08:00",
+    "version": 1,
+    "summary": "东城、西城两区并案：同一车辆、同一套话术与同一收款网络；随案证据逐项列明三要素",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "MERGE-2026-0007",
+      "received_by": "市支队联络员",
+      "district": "东城区"
+    },
+    "payload": {
+      "merged_district_case_refs": ["东城区-R-2026-1001", "西城区-R-2026-2007"],
+      "evidence_refs": ["evt-2026-0921-015", "evt-2026-0921-016"]
+    }
+  },
+  {
+    "event_id": "evt-2026-0930-022",
+    "event_type": "CASE_TRANSFERRED",
+    "aggregate_type": "case_transfer",
+    "aggregate_id": "CT-2026-0044",
+    "occurred_at": "2026-09-30T15:00:00+08:00",
+    "version": 1,
+    "summary": "侦查终结，全案材料及封存证据清单移送检察机关审查起诉",
+    "source": {
+      "channel": "court_transfer",
+      "source_ref": "TRANSFER-2026-0044",
+      "received_by": "法制大队孙拓",
+      "district": "东城区"
+    },
+    "payload": {
+      "evidence_refs": ["evt-2026-0921-015", "evt-2026-0921-016"],
+      "legal_basis": "刑事诉讼法第一百六十二条移送审查起诉"
+    }
+  },
+  {
+    "event_id": "evt-2026-10-02-023",
+    "event_type": "ASSET_RECOVERY_UPDATED",
+    "aggregate_type": "asset_recovery",
+    "aggregate_id": "AR-R-2026-1001",
+    "occurred_at": "2026-10-02T11:00:00+08:00",
+    "version": 1,
+    "summary": "已追缴首批退赔款5200元并存入专户，老人及家属可查询追缴进度",
+    "source": {
+      "channel": "court_transfer",
+      "source_ref": "RECOV-20261002-011",
+      "received_by": "财务联络人何颖",
+      "district": "东城区"
+    },
+    "payload": {
+      "visibility": "family_visible",
+      "recovered_amount": 5200,
+      "claimed_amount": 8600
+    }
+  },
+  {
+    "event_id": "evt-2026-0921-024",
+    "event_type": "ACCESS_GRANTED",
+    "aggregate_type": "access_grant",
+    "aggregate_id": "AG-2026-0088",
+    "occurred_at": "2026-09-21T17:00:00+08:00",
+    "version": 1,
+    "summary": "授权社区社工查看老人保护所需的最小信息，不含案情细节与证据内容",
+    "source": {
+      "channel": "caseworker",
+      "source_ref": "GRANT-2026-0088",
+      "received_by": "中心管理员",
+      "district": "东城区"
+    },
+    "payload": {
+      "access_role": "social_worker",
+      "reader": "社工李航",
+      "purpose": "安排老人陪同就医与防骗回访",
+      "fields_granted": ["victim_contact", "protection_need", "emergency_status"]
+    }
+  },
+  {
+    "event_id": "evt-2026-10-02-025",
+    "event_type": "ACCESS_GRANTED",
+    "aggregate_type": "access_grant",
+    "aggregate_id": "AG-2026-0102",
+    "occurred_at": "2026-10-02T11:20:00+08:00",
+    "version": 1,
+    "summary": "授权家属查询受理状态与退赔追缴进度，不开放未公开案情",
+    "source": {
+      "channel": "family_report",
+      "source_ref": "GRANT-2026-0102",
+      "received_by": "中心管理员",
+      "district": "东城区"
+    },
+    "payload": {
+      "access_role": "family",
+      "reader": "老人家属马女士",
+      "purpose": "了解受理与财物追缴进度",
+      "fields_granted": ["acceptance_status", "asset_recovery_progress", "next_contact"]
+    }
+  },
+  {
+    "event_id": "evt-2026-10-03-026",
+    "event_type": "RISK_NOTICE_PUBLISHED",
+    "aggregate_type": "risk_notice",
+    "aggregate_id": "RN-2026-10-01",
+    "occurred_at": "2026-10-03T09:00:00+08:00",
+    "version": 1,
+    "summary": "社区风险公告：提示‘公园免费礼品—车接上门—密闭场所施压购物’套路与求助渠道，不含任何在办案情",
+    "source": {
+      "channel": "community_visit",
+      "source_ref": "NOTICE-20261003-001",
+      "received_by": "中心宣传员",
+      "district": "东城区"
+    },
+    "payload": {
+      "disclosure_level": "public",
+      "visibility": "public"
+    }
+  }
+]
