@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "涉老强迫交易线索网领域事件",
+  "description": "线索协同与案件证据后端的事件信封契约。记录只追加：标识、发生时间与版本不得原地改写，更正以新后继记录表达；个人、机构与商业敏感信息按使用范围与角色最小开放。",
   "type": "object",
   "required": [
     "event_id",
@@ -14,25 +15,45 @@
   "properties": {
     "event_id": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "仓库事件标识，全局唯一，用于跨来源去重"
     },
     "event_type": {
       "type": "string",
       "enum": [
         "REPORT_RECEIVED",
+        "REPORT_LINKED_TO_INCIDENT",
+        "STATEMENT_AMENDED",
+        "ACCEPTANCE_GIVEN",
+        "PAYMENT_DISPUTE_FILED",
+        "PAYMENT_HOLD_DECIDED",
         "LINK_SUGGESTED",
+        "LINK_CONFIRMED",
+        "LINK_EXCLUDED",
+        "PROTECTION_PROFILE_PUBLISHED",
         "EVIDENCE_SEALED",
+        "EVIDENCE_ASSESSED",
+        "EVIDENCE_CUSTODY_TRANSFERRED",
         "PROTECTIVE_ACTIONED",
-        "CASE_TRANSFERRED"
+        "CASE_TRANSFERRED",
+        "ASSET_RECOVERY_UPDATED",
+        "PUBLIC_NOTICE_PUBLISHED",
+        "ACCESS_GRANTED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "incident_report",
+        "payment_dispute",
         "subject_link",
+        "protection_profile",
         "evidence_item",
-        "case_transfer"
+        "protective_action",
+        "case_transfer",
+        "asset_recovery",
+        "public_notice",
+        "access_grant"
       ]
     },
     "aggregate_id": {
@@ -45,12 +66,187 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一聚合内从 1 起严格递增"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "payload": {
+      "type": "object",
+      "description": "按事件类型区分的内容，见 $defs；规则以 src/validator.py 为准"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "$defs": {
+    "report_received": {
+      "type": "object",
+      "required": ["source_channel", "source_record_id"],
+      "properties": {
+        "source_channel": {
+          "type": "string",
+          "enum": ["police", "community", "family", "bank", "merchant"]
+        },
+        "source_record_id": { "type": "string", "minLength": 1 },
+        "victim_ref": { "type": "string" },
+        "narrative": { "type": "string" },
+        "location": { "type": "string" },
+        "access_label": {
+          "type": "string",
+          "enum": ["casework_full", "protection_minimum", "family_status", "public_notice"]
+        }
+      }
+    },
+    "report_linked": {
+      "type": "object",
+      "required": ["source_event_id", "incident_id", "retain_original"],
+      "properties": {
+        "source_event_id": { "type": "string", "description": "被并入的原始接收事件" },
+        "incident_id": { "type": "string" },
+        "retain_original": { "const": true, "description": "原始来源记录必须保留" }
+      }
+    },
+    "statement_amended": {
+      "type": "object",
+      "required": ["supersedes_event_id", "amendment_kind", "original_preserved"],
+      "properties": {
+        "supersedes_event_id": { "type": "string" },
+        "amendment_kind": { "type": "string", "enum": ["supplement", "correction"] },
+        "original_preserved": { "const": true, "description": "原始口述版本与访问记录仍需保存" },
+        "narrator_ref": { "type": "string" },
+        "reason": { "type": "string" }
+      }
+    },
+    "link_suggested": {
+      "type": "object",
+      "required": ["link_id", "adjudication"],
+      "properties": {
+        "link_id": { "type": "string" },
+        "adjudication": {
+          "const": "hint_only",
+          "description": "风险模型只能提示关联，不得自动给个人定罪"
+        },
+        "basis": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["vehicle_track", "speech_pattern", "shared_location", "shared_time", "payment_flow", "merchant_entity"]
+          }
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "link_confirmed": {
+      "type": "object",
+      "required": ["link_id", "confirmed_by", "network_id", "members"],
+      "properties": {
+        "link_id": { "type": "string" },
+        "confirmed_by": { "type": "string", "description": "人工确认人，不得为模型" },
+        "network_id": { "type": "string" },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["person_ref", "role"],
+            "properties": {
+              "person_ref": { "type": "string" },
+              "role": {
+                "type": "string",
+                "enum": ["driver", "talker", "collector", "enforcer", "merchant", "lookout"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "link_excluded": {
+      "type": "object",
+      "required": ["link_id", "reason"],
+      "properties": {
+        "link_id": { "type": "string" },
+        "reason": { "type": "string", "minLength": 1, "description": "已排除的关联也保留理由" }
+      }
+    },
+    "evidence_sealed": {
+      "type": "object",
+      "required": ["evidence_kind", "obtained_how", "custodian", "usage_scope"],
+      "properties": {
+        "evidence_kind": {
+          "type": "string",
+          "enum": ["video_sealed", "product_sample", "document", "payment_record", "vehicle_record", "statement_recording"]
+        },
+        "obtained_how": { "type": "string", "minLength": 1, "description": "取得方式" },
+        "custodian": { "type": "string", "minLength": 1, "description": "保管人" },
+        "usage_scope": { "type": "string", "minLength": 1, "description": "使用范围" },
+        "seal_ref": { "type": "string" }
+      }
+    },
+    "evidence_custody": {
+      "type": "object",
+      "required": ["to_custodian", "legal_basis", "usage_scope", "cross_district"],
+      "properties": {
+        "to_custodian": { "type": "string" },
+        "legal_basis": { "type": "string" },
+        "usage_scope": { "type": "string" },
+        "cross_district": { "type": "boolean" }
+      }
+    },
+    "protective_actioned": {
+      "type": "object",
+      "required": ["action_type", "legal_authority", "duty_officer"],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "enum": ["EMERGENCY_CONTACT", "ACCOMPANIED_WITHDRAWAL_INTERCEPTION", "SHELTER_PLACEMENT"]
+        },
+        "legal_authority": { "type": "string", "minLength": 1 },
+        "duty_officer": { "type": "string", "minLength": 1 },
+        "victim_ref": { "type": "string" }
+      }
+    },
+    "payment_hold": {
+      "type": "object",
+      "required": ["hold"],
+      "properties": {
+        "hold": { "type": "boolean" },
+        "legal_basis": {
+          "type": "string",
+          "description": "hold=true 时必填；普通相似交易不得无依据冻结"
+        }
+      }
+    },
+    "case_transferred": {
+      "type": "object",
+      "required": ["target_authority", "usage_scope", "transferred_evidence"],
+      "properties": {
+        "target_authority": { "type": "string" },
+        "cross_district": { "type": "boolean" },
+        "usage_scope": { "type": "string" },
+        "transferred_evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "public_notice": {
+      "type": "object",
+      "required": ["warning_text"],
+      "properties": {
+        "warning_text": { "type": "string" },
+        "district": { "type": "string" }
+      },
+      "description": "社区风险公告仅含泛化提示；人名、身份、车牌、地址、未公开案情一律禁止"
+    },
+    "access_granted": {
+      "type": "object",
+      "required": ["role", "grantee_id", "purpose", "targets"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["investigator", "social_worker", "family", "public"]
+        },
+        "grantee_id": { "type": "string" },
+        "purpose": { "type": "string" },
+        "targets": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
 }

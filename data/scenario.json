@@ -1,0 +1,398 @@
+[
+  {
+    "event_id": "evt-20260918-0920-community",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918",
+    "occurred_at": "2026-09-18T09:20:00+08:00",
+    "version": 1,
+    "summary": "社区走访接报：老人在滨河公园被陌生人带上面包车，送货入户后被迫付款",
+    "payload": {
+      "source_channel": "community",
+      "source_record_id": "SQ-20260918-01",
+      "victim_ref": "V-1001",
+      "narrative": "两人搭话称免费体检，诱骗上车后送至出租屋，送来号称治疗仪的设备并索要8600元",
+      "location": "滨河公园东门",
+      "access_label": "casework_full"
+    }
+  },
+  {
+    "event_id": "evt-20260918-1005-police",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918-R2",
+    "occurred_at": "2026-09-18T10:05:00+08:00",
+    "version": 1,
+    "summary": "110接报同一起公园带离事件，单条看似消费纠纷",
+    "payload": {
+      "source_channel": "police",
+      "source_record_id": "110-20260918-1147",
+      "victim_ref": "V-1001",
+      "narrative": "报警称被迫刷卡购买保健品，对方已离开",
+      "access_label": "casework_full"
+    }
+  },
+  {
+    "event_id": "evt-20260918-1100-link",
+    "event_type": "REPORT_LINKED_TO_INCIDENT",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918",
+    "occurred_at": "2026-09-18T11:00:00+08:00",
+    "version": 2,
+    "summary": "110记录按时间地点人物并入主事件，原始来源保留",
+    "payload": {
+      "source_event_id": "evt-20260918-1005-police",
+      "incident_id": "INC-20260918",
+      "retain_original": true
+    }
+  },
+  {
+    "event_id": "evt-20260918-1430-family",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918-R3",
+    "occurred_at": "2026-09-18T14:30:00+08:00",
+    "version": 1,
+    "summary": "家属报失：发现老人存折异常取现与一份购买协议",
+    "payload": {
+      "source_channel": "family",
+      "source_record_id": "FAM-20260918-03",
+      "victim_ref": "V-1001",
+      "narrative": "家中出现标价8600元的治疗仪器及收据，老人不愿多谈",
+      "access_label": "family_status"
+    }
+  },
+  {
+    "event_id": "evt-20260918-1510-link",
+    "event_type": "REPORT_LINKED_TO_INCIDENT",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918",
+    "occurred_at": "2026-09-18T15:10:00+08:00",
+    "version": 3,
+    "summary": "家属报失并入同一事件，原始记录留存备查",
+    "payload": {
+      "source_event_id": "evt-20260918-1430-family",
+      "incident_id": "INC-20260918",
+      "retain_original": true
+    }
+  },
+  {
+    "event_id": "evt-20260918-1600-dispute",
+    "event_type": "PAYMENT_DISPUTE_FILED",
+    "aggregate_type": "payment_dispute",
+    "aggregate_id": "PD-20260918",
+    "occurred_at": "2026-09-18T16:00:00+08:00",
+    "version": 1,
+    "summary": "银行协助提交涉事POS交易争议",
+    "payload": {
+      "source_channel": "bank",
+      "source_record_id": "BK-DISP-20260918-77",
+      "merchant_ref": "M-3301",
+      "amount": 8600,
+      "incident_id": "INC-20260918"
+    }
+  },
+  {
+    "event_id": "evt-20260918-1720-hold",
+    "event_type": "PAYMENT_HOLD_DECIDED",
+    "aggregate_type": "payment_dispute",
+    "aggregate_id": "PD-20260918",
+    "occurred_at": "2026-09-18T17:20:00+08:00",
+    "version": 2,
+    "summary": "仅凭相似交易模式不予冻结，待补充法定依据",
+    "payload": {
+      "hold": false,
+      "reason": "普通相似交易不能被无依据冻结"
+    }
+  },
+  {
+    "event_id": "evt-20260919-0900-accept",
+    "event_type": "ACCEPTANCE_GIVEN",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918",
+    "occurred_at": "2026-09-19T09:00:00+08:00",
+    "version": 4,
+    "summary": "中心正式受理并告知家属查询编号",
+    "payload": {
+      "accepted_by": "区涉老权益中心",
+      "family_visible": true
+    }
+  },
+  {
+    "event_id": "evt-20260919-1100-seal-product",
+    "event_type": "EVIDENCE_SEALED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "EV-0918-PROD",
+    "occurred_at": "2026-09-19T11:00:00+08:00",
+    "version": 1,
+    "summary": "封存涉案治疗仪及购买协议，登记取得方式与保管人",
+    "payload": {
+      "evidence_kind": "product_sample",
+      "obtained_how": "家属自愿提交并签字确认，社工在场见证",
+      "custodian": "中心证据管理员 周某",
+      "usage_scope": "仅限本案办案与司法移送使用",
+      "seal_ref": "SEAL-0918-01"
+    }
+  },
+  {
+    "event_id": "evt-20260919-1500-amend",
+    "event_type": "STATEMENT_AMENDED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260918",
+    "occurred_at": "2026-09-19T15:00:00+08:00",
+    "version": 5,
+    "summary": "老人补充口述：回忆起面包车尾号与话术开头，原口述保留",
+    "payload": {
+      "supersedes_event_id": "evt-20260918-0920-community",
+      "amendment_kind": "supplement",
+      "original_preserved": true,
+      "narrator_ref": "V-1001",
+      "reason": "情绪平复后回忆起车辆与对话细节，以补充记录追加，不覆盖原口述"
+    }
+  },
+  {
+    "event_id": "evt-20260919-1600-suggest-van",
+    "event_type": "LINK_SUGGESTED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-VAN-077",
+    "occurred_at": "2026-09-19T16:00:00+08:00",
+    "version": 1,
+    "summary": "风险模型提示：车辆轨迹与相似话术跨多起记录重合，仅供研判",
+    "payload": {
+      "link_id": "L-VAN-077",
+      "adjudication": "hint_only",
+      "basis": ["vehicle_track", "speech_pattern", "shared_location"],
+      "confidence": 0.71
+    }
+  },
+  {
+    "event_id": "evt-20260922-1030-assess",
+    "event_type": "EVIDENCE_ASSESSED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "EV-0918-PROD",
+    "occurred_at": "2026-09-22T10:30:00+08:00",
+    "version": 2,
+    "summary": "商品鉴定：仪器为无证劣质产品，售价约为同类公允价的九倍",
+    "payload": {
+      "assessment_org": "区市场监管局委托检测机构",
+      "result": "不合格产品；价格显著虚高",
+      "assessor": "检测师 吴某"
+    }
+  },
+  {
+    "event_id": "evt-20260925-0850-bank-report",
+    "event_type": "REPORT_RECEIVED",
+    "aggregate_type": "incident_report",
+    "aggregate_id": "INC-20260925",
+    "occurred_at": "2026-09-25T08:50:00+08:00",
+    "version": 1,
+    "summary": "银行网点报：老人由两名陌生人陪同要求大额取现，疑似正在发生陪同取款",
+    "payload": {
+      "source_channel": "bank",
+      "source_record_id": "BK-TIP-20260925-02",
+      "victim_ref": "V-1002",
+      "narrative": "老人神色紧张，身旁人员代为回答用途，要求支取现金4万元",
+      "location": "某银行迎宾支行",
+      "access_label": "casework_full"
+    }
+  },
+  {
+    "event_id": "evt-20260925-0905-emergency",
+    "event_type": "PROTECTIVE_ACTIONED",
+    "aggregate_type": "protective_action",
+    "aggregate_id": "PA-0925-01",
+    "occurred_at": "2026-09-25T09:05:00+08:00",
+    "version": 1,
+    "summary": "值班员按法定权限启动紧急联络并拦截陪同取款",
+    "payload": {
+      "action_type": "ACCOMPANIED_WITHDRAWAL_INTERCEPTION",
+      "legal_authority": "《老年人权益保障法》及本区涉老权益应急联动授权",
+      "duty_officer": "值班员 郑某",
+      "victim_ref": "V-1002"
+    }
+  },
+  {
+    "event_id": "evt-20260925-1300-seal-video",
+    "event_type": "EVIDENCE_SEALED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "EV-0925-VID",
+    "occurred_at": "2026-09-25T13:00:00+08:00",
+    "version": 1,
+    "summary": "封存公园周边与网点门口视频，记录原始载体与哈希",
+    "payload": {
+      "evidence_kind": "video_sealed",
+      "obtained_how": "持协查函调取公园与网点公共监控，原始硬盘封存并计算哈希",
+      "custodian": "中心证据管理员 周某",
+      "usage_scope": "本案办案、跨区协查与司法移送",
+      "seal_ref": "SEAL-0925-02"
+    }
+  },
+  {
+    "event_id": "evt-20260926-0900-suggest-plate",
+    "event_type": "LINK_SUGGESTED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-PLATE-X1",
+    "occurred_at": "2026-09-26T09:00:00+08:00",
+    "version": 1,
+    "summary": "模型提示某车牌可能相关，待人工核验",
+    "payload": {
+      "link_id": "L-PLATE-X1",
+      "adjudication": "hint_only",
+      "basis": ["vehicle_track"],
+      "confidence": 0.42
+    }
+  },
+  {
+    "event_id": "evt-20260926-1600-exclude-plate",
+    "event_type": "LINK_EXCLUDED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-PLATE-X1",
+    "occurred_at": "2026-09-26T16:00:00+08:00",
+    "version": 2,
+    "summary": "人工核验后排除该车牌，排除理由保留",
+    "payload": {
+      "link_id": "L-PLATE-X1",
+      "reason": "车牌号系补录笔误，卡口照片显示该车事发时段在邻省维修，有维修单与ETC记录佐证"
+    }
+  },
+  {
+    "event_id": "evt-20260927-1000-confirm-network",
+    "event_type": "LINK_CONFIRMED",
+    "aggregate_type": "subject_link",
+    "aggregate_id": "L-VAN-077",
+    "occurred_at": "2026-09-27T10:00:00+08:00",
+    "version": 2,
+    "summary": "办案民警结合两起事件、视频与资金流确认共同作案网络及分工",
+    "payload": {
+      "link_id": "L-VAN-077",
+      "confirmed_by": "经侦民警 张某（警号03xxxx）",
+      "network_id": "NET-2026-09",
+      "members": [
+        {"person_ref": "S-2001", "role": "driver", "note": "驾驶面包车负责公园带离"},
+        {"person_ref": "S-2002", "role": "talker", "note": "负责搭话与免费体检话术"},
+        {"person_ref": "S-2003", "role": "collector", "note": "陪同取款、收取现金"},
+        {"person_ref": "S-2004", "role": "enforcer", "note": "在密闭出租屋内看守施压"},
+        {"person_ref": "S-2005", "role": "merchant", "note": "提供POS商户主体与虚高商品"}
+      ]
+    }
+  },
+  {
+    "event_id": "evt-20260928-0930-custody-xdistrict",
+    "event_type": "EVIDENCE_CUSTODY_TRANSFERRED",
+    "aggregate_type": "evidence_item",
+    "aggregate_id": "EV-0925-VID",
+    "occurred_at": "2026-09-28T09:30:00+08:00",
+    "version": 2,
+    "summary": "应邻区协查请求移交视频副本，明确保管人、依据与使用范围",
+    "payload": {
+      "to_custodian": "邻区分局证据室 李某",
+      "legal_basis": "跨区涉老案件协查函 XC-2026-041",
+      "usage_scope": "仅限协查本案在邻区的关联作案，不得用于其他用途",
+      "cross_district": true
+    }
+  },
+  {
+    "event_id": "evt-20260928-1400-profile",
+    "event_type": "PROTECTION_PROFILE_PUBLISHED",
+    "aggregate_type": "protection_profile",
+    "aggregate_id": "PP-V-1002",
+    "occurred_at": "2026-09-28T14:00:00+08:00",
+    "version": 1,
+    "summary": "向责任社工发布保护方案，仅含保护老人所需要的信息",
+    "payload": {
+      "victim_ref": "V-1002",
+      "risk_points": ["可能再次被陪同取款", "独居且对话术辨识弱"],
+      "plan": "每周电话回访、网点取现提醒、家属应急联系卡",
+      "access_label": "protection_minimum"
+    }
+  },
+  {
+    "event_id": "evt-20260928-1500-access-investigator",
+    "event_type": "ACCESS_GRANTED",
+    "aggregate_type": "access_grant",
+    "aggregate_id": "AG-2026-001",
+    "occurred_at": "2026-09-28T15:00:00+08:00",
+    "version": 1,
+    "summary": "授予主办民警全量办案信息，可从嫌疑人角色回看共同作案网络",
+    "payload": {
+      "role": "investigator",
+      "grantee_id": "U-police-zhang",
+      "purpose": "办理 NET-2026-09 强迫交易案",
+      "targets": ["casework_full"]
+    }
+  },
+  {
+    "event_id": "evt-20260928-1510-access-socialworker",
+    "event_type": "ACCESS_GRANTED",
+    "aggregate_type": "access_grant",
+    "aggregate_id": "AG-2026-002",
+    "occurred_at": "2026-09-28T15:10:00+08:00",
+    "version": 1,
+    "summary": "授予社工保护所需最小信息，不含案情细节与嫌疑人身份",
+    "payload": {
+      "role": "social_worker",
+      "grantee_id": "U-socialwork-lin",
+      "purpose": "执行 V-1002 保护方案",
+      "targets": ["protection_minimum"]
+    }
+  },
+  {
+    "event_id": "evt-20260928-1520-access-family",
+    "event_type": "ACCESS_GRANTED",
+    "aggregate_type": "access_grant",
+    "aggregate_id": "AG-2026-003",
+    "occurred_at": "2026-09-28T15:20:00+08:00",
+    "version": 1,
+    "summary": "授予家属受理与追缴进度查询权限",
+    "payload": {
+      "role": "family",
+      "grantee_id": "U-family-v1001",
+      "purpose": "查询 V-1001 案受理与财物追缴进度",
+      "targets": ["family_status"]
+    }
+  },
+  {
+    "event_id": "evt-20260930-1000-transfer",
+    "event_type": "CASE_TRANSFERRED",
+    "aggregate_type": "case_transfer",
+    "aggregate_id": "CT-20260930",
+    "occurred_at": "2026-09-30T10:00:00+08:00",
+    "version": 1,
+    "summary": "全案司法移送，随附已封存证据清单并限定使用范围",
+    "payload": {
+      "target_authority": "区公安分局经济犯罪侦查大队",
+      "cross_district": true,
+      "usage_scope": "刑事诉讼用途，涉及个人与商户信息不得对外披露",
+      "transferred_evidence": ["EV-0918-PROD", "EV-0925-VID"]
+    }
+  },
+  {
+    "event_id": "evt-20260930-1100-notice",
+    "event_type": "PUBLIC_NOTICE_PUBLISHED",
+    "aggregate_type": "public_notice",
+    "aggregate_id": "PN-20260930",
+    "occurred_at": "2026-09-30T11:00:00+08:00",
+    "version": 1,
+    "summary": "社区风险公告仅发布泛化防范提示",
+    "payload": {
+      "district": "本区各社区",
+      "warning_text": "近期有以免费体检、赠送礼品为名在公园搭讪老人并带离、送货上门收取高额费用的情况。请勿随陌生人上车或入户，大额支付先与家人商量，遇可疑人员请联系社区或拨打110。"
+    }
+  },
+  {
+    "event_id": "evt-20261003-0930-recovery",
+    "event_type": "ASSET_RECOVERY_UPDATED",
+    "aggregate_type": "asset_recovery",
+    "aggregate_id": "AR-20260918",
+    "occurred_at": "2026-10-03T09:30:00+08:00",
+    "version": 1,
+    "summary": "追缴进度更新：家属可查，已追回部分款项",
+    "payload": {
+      "incident_id": "INC-20260918",
+      "recovered_amount": 5000,
+      "total_amount": 8600,
+      "family_visible": true,
+      "status": "剩余款项随刑事程序继续追缴"
+    }
+  }
+]
